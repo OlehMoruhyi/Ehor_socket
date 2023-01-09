@@ -156,7 +156,7 @@ class Application(Window):
         super().__init__(client)
 
         self.nickname = nickname
-        self.setFixedSize(901, 762)
+        self.setFixedSize(441, 800)
 
         self.receiveThread_1 = threading.Thread(target=self.receive_messages)  # Получение всех сообщений
         self.receiveThread_2 = threading.Thread(target=self.enter_send)  # Получение всех сообщений
@@ -164,16 +164,16 @@ class Application(Window):
         self.threadCloser = False
 
         self.messageLine_1 = QtWidgets.QLineEdit(self)
-        self.messageLine_1.setGeometry(QtCore.QRect(510, 690, 281, 31))
+        self.messageLine_1.setGeometry(QtCore.QRect(30, 690, 281, 31))
         self.messageLine_1.setObjectName("messageLine_1")
 
         self.messageButton_1 = QtWidgets.QPushButton(self)
-        self.messageButton_1.setGeometry(QtCore.QRect(800, 690, 93, 31))
+        self.messageButton_1.setGeometry(QtCore.QRect(320, 690, 93, 31))
         self.messageButton_1.setObjectName("messageButton_1")
         self.messageButton_1.clicked.connect(lambda x: self.send_messages(self.messageLine_1))
 
         self.textEdit_1 = QtWidgets.QTextEdit(self)
-        self.textEdit_1.setGeometry(QtCore.QRect(510, 45, 381, 631))
+        self.textEdit_1.setGeometry(QtCore.QRect(30, 45, 381, 631))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.textEdit_1.setFont(font)
@@ -183,8 +183,42 @@ class Application(Window):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
+        font_2 = QtGui.QFont()
+        font_2.setPointSize(16)
+
+        self.button_0 = QtWidgets.QPushButton(self)
+        self.button_0.setGeometry(45, 740, 41, 41)
+        self.button_0.setFont(font_2)
+        self.button_0.setText("❤")
+        self.button_0.clicked.connect(lambda x: self.smile("❤"))
+        self.button_1 = QtWidgets.QPushButton(self)
+        self.button_1.setGeometry(106, 740, 41, 41)
+        self.button_1.setFont(font_2)
+        self.button_1.setText("😊")
+        self.button_1.clicked.connect(lambda x: self.smile("😊"))
+        self.button_2 = QtWidgets.QPushButton(self)
+        self.button_2.setGeometry(167, 740, 41, 41)
+        self.button_2.setFont(font_2)
+        self.button_2.setText("😂")
+        self.button_2.clicked.connect(lambda x: self.smile("😂"))
+        self.button_3 = QtWidgets.QPushButton(self)
+        self.button_3.setGeometry(228, 740, 41, 41)
+        self.button_3.setFont(font_2)
+        self.button_3.setText("😍")
+        self.button_3.clicked.connect(lambda x: self.smile("😍"))
+        self.button_4 = QtWidgets.QPushButton(self)
+        self.button_4.setGeometry(289, 740, 41, 41)
+        self.button_4.setFont(font_2)
+        self.button_4.setText("😒")
+        self.button_4.clicked.connect(lambda x: self.smile("😒"))
+        self.button_5 = QtWidgets.QPushButton(self)
+        self.button_5.setGeometry(350, 740, 41, 41)
+        self.button_5.setFont(font_2)
+        self.button_5.setText("🖕")
+        self.button_5.clicked.connect(lambda x: self.smile("🖕"))
+
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.setWindowTitle(_translate("MainWindow", "Anonymous chat"))
         self.messageButton_1.setText(_translate("MainWindow", "Send"))
 
     def start(self):
@@ -214,6 +248,9 @@ class Application(Window):
         while not self.threadCloser:
             if is_pressed("\n"):
                 self.send_messages(self.messageLine_1)
+
+    def smile(self, smile):
+        self.messageLine_1.setText(self.messageLine_1.text() + smile)
 
     def receive_messages(self):
         while not self.threadCloser:  # Подтверждение соединения
