@@ -222,11 +222,8 @@ class Application(Window):
                 match message.get('command'):
                     case 'message':
                         self.textEdit_1.append(str(message.get('content', 'no_content')))
-                    case 'info':
-                        self.set_info(message)
-                    case 'only_user_message':
-                        self.textEdit_1.append(str(message.get('content', 'no_content')))
-                        self.client.send(json.dumps({"command": "get_info"}).encode('utf-8'))
+                    case _:
+                        print("Fucking wrong")
 
             except Exception as e:  # Если неправильный ip или порт
                 print(e.__class__)
@@ -235,34 +232,7 @@ class Application(Window):
                 self.client.close()
                 break
 
-    def set_info(self, message):
-        self.statsLabel.setText(message['stats'])
-        for i in self.inventoryButtons:
-            i.setText("")
-        for i in self.fightButtons:
-            i.setText("")
-        for i in self.duelButtons:
-            i.setText("")
-        for i in range(len(message["inventory"])):
-            self.inventoryButtons[i].setText(
-                str(message["inventory"][i]["name"].replace(" ", "\n"))+" "+str(message["inventory"][i]["level"]))
-        for i in range(len(message["beasts"])):
-            text = "Fight "
 
-            match message["beasts"][i]:
-                case 1: text += "weak "
-                case 2: text += "average "
-                case 3: text += "big "
-            match message["location"]:
-                case 1: text += "healthy "
-                case 2: text += "fire "
-                case 3: text += "air "
-                case 4: text += "water "
-                case 5: text += "earth "
-            text += "beast"
-            self.fightButtons[i].setText(text)
-        for i in range(len(message["duels"])):
-            self.duelButtons[i].setText("Fight " + message["duels"][i])
 
 
 app = QtWidgets.QApplication(sys.argv)

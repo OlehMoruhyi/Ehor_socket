@@ -3,7 +3,6 @@ import socket
 import threading
 import json
 import pymysql  # Импорт библиотек
-import random
 
 from config import host, port, bd_name, bd_password, bd_user, host_mysql
 
